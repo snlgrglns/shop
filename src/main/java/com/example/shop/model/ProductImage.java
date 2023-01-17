@@ -36,6 +36,10 @@ public class ProductImage {
 		this.productId = productId;
 	}
 
+	public ProductImage(String imagePath) {
+		super();
+		this.imagePath = imagePath;
+	}
 
 
 	public int getId() {
