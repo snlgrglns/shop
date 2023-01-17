@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 //import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.core.io.ClassPathResource;
 
+import com.example.shop.exception.ResourceNotFoundException;
 import com.example.shop.model.ProductImage;
 import com.example.shop.repository.ProductImageRepository;
 
@@ -81,5 +86,15 @@ public class ProductimageController {
 		String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/product_images/").path("Screenshot.png").toUriString();
 	    return ResponseEntity
                 .ok(url);
+	}
+	
+	@DeleteMapping("/image/{id}")
+	public ResponseEntity<Map<String, Boolean>> deleteColor(@PathVariable Long id){
+		ProductImage productImage = productImageRepository.findById(id)
+				.orElseThrow(()->new ResourceNotFoundException("Color does not exist for id: " + id));				
+		productImageRepository.delete(productImage);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("deleted", Boolean.TRUE);
+		return ResponseEntity.ok(response);
 	}
 }
