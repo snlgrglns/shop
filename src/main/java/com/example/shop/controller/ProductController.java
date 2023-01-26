@@ -39,6 +39,7 @@ import com.example.shop.repository.ProductImageRepository;
 import com.example.shop.repository.ProductPriceRepository;
 import com.example.shop.repository.ProductRepository;
 import com.example.shop.repository.ProductSizeRepository;
+import com.example.shop.service.AuthneticationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @CrossOrigin(origins="http://localhost:3000/")
@@ -59,6 +60,8 @@ public class ProductController {
 	
 	@Autowired
 	private ProductSizeRepository productSizeRepository;
+//	@Autowired
+//	private AuthneticationService authneticationService;
 
 	private static String imageDirectoryPath;
 	
